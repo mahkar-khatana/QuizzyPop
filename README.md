@@ -1,8 +1,6 @@
 # QuizzyPop
-# 🚀 Project Title
 
-[Short and clear description of your project]  
-Example: A web-based platform that offers customized recommendations based on user preferences and personality types.
+QUIZZYPOP is an interactive online quiz platform that enhances learning through diverse quizzes, real-time feedback, and secure assessments. It streamlines testing while fostering engagement for students, educators, and businesses.
 
 ---
 ## 👥 Team Members
@@ -17,7 +15,7 @@ Example: A web-based platform that offers customized recommendations based on us
 
 ## 📽️ Video Explanation
 
-🎥 [Click here to watch the video](https://your-video-link.com)
+🎥 [Click here to watch the video](https://drive.google.com/file/d/16KY1xLUHYYYWlyE3pkcVKAKkbyYO1POZ/view?usp=share_link)
 
 ---
 
@@ -43,22 +41,8 @@ Example: A web-based platform that offers customized recommendations based on us
 
 ## 📸 Screenshots
 
-![Screenshot 1](https://your-image-link.com)
-![Screenshot 2](https://your-image-link.com)
+![Screenshot 1](https://drive.google.com/file/d/1gGlhTqRINSO_u_tWF5bbsL3vwzV2RxeJ/view?usp=share_link)
+![Screenshot 2](https://drive.google.com/file/d/1TehrLU-W0rxK742xjiM2zHVuEdXsXX6Y/view?usp=share_link)
 
 ---
 
-## 🛠️ How to Run the Project
-
-```bash
-# Clone the repository
-git clone https://github.com/mahkar-khatana/QuizzyPop/edit/main/README.md
-
-# Navigate to the project directory
-cd project-repo
-
-# Install dependencies (if needed)
-pip install -r requirements.txt
-
-# Run the app
-streamlit run app.py
