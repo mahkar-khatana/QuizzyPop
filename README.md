@@ -8,9 +8,9 @@ Example: A web-based platform that offers customized recommendations based on us
 ## 👥 Team Members
 
 - Mahkar Khatana (2401010188)
-- Kanav Malik (
+- Kanav Malik (2401010231)
 - Mayank Bajetha (2401010206)
-- Sriyansh Yadav (
+- Sriyansh Yadav (2401010238)
 
 ---
 
@@ -52,7 +52,7 @@ Example: A web-based platform that offers customized recommendations based on us
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/project-repo
+git clone https://github.com/mahkar-khatana/QuizzyPop/edit/main/README.md
 
 # Navigate to the project directory
 cd project-repo
