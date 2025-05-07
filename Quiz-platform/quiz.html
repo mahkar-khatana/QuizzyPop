@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz - QuizzyPop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="quiz.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>QuizzyPop</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quiz.html">Take Quiz</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="hero">
+        <h2>Take a Quiz</h2>
+        <p>Test your knowledge with our interactive quizzes!</p>
+    </div>
+    
+    <div id="quiz-container">
+        <!-- Quiz questions will appear here dynamically -->
+    </div>
+    <button id="submitQuiz" class="cta-button">Submit</button>
+    <script>
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+        
+        async function fetchQuiz() {
+            // Static quiz questions
+            currentQuiz = {
+                questions: [
+                    {
+                        question: "What is the capital of France?",
+                        options: ["London", "Berlin", "Paris", "Madrid"],
+                        answer: 2
+                    },
+                    {
+                        question: "Which planet is known as the Red Planet?",
+                        options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                        answer: 1
+                    },
+                    {
+                        question: "Who painted the Mona Lisa?",
+                        options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+                        answer: 2
+                    },
+                    {
+                        question: "What is the largest ocean on Earth?",
+                        options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                        answer: 3
+                    },
+                    {
+                        question: "Which element has the chemical symbol 'Au'?",
+                        options: ["Silver", "Copper", "Gold", "Aluminum"],
+                        answer: 2
+                    },
+                    {
+                        question: "In which year did World War II end?",
+                        options: ["1943", "1944", "1945", "1946"],
+                        answer: 2
+                    },
+                    {
+                        question: "What is the largest mammal in the world?",
+                        options: ["African Elephant", "Blue Whale", "Giraffe", "Polar Bear"],
+                        answer: 1
+                    },
+                    {
+                        question: "Which programming language was created by James Gosling?",
+                        options: ["Python", "Java", "C++", "JavaScript"],
+                        answer: 1
+                    },
+                    {
+                        question: "What is the square root of 144?",
+                        options: ["10", "11", "12", "13"],
+                        answer: 2
+                    },
+                    {
+                        question: "What is the square of 14?",
+                        options: ["144", "169", "216", "196"],
+                        answer: 4
+                    }
+                ]
+            };
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = '';
+        
+            if (currentQuestionIndex >= currentQuiz.questions.length) {
+                submitQuiz();
+                return;
+            }
+        
+            const questionData = currentQuiz.questions[currentQuestionIndex];
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            
+            const questionText = document.createElement('h2');
+            questionText.innerText = `${currentQuestionIndex + 1}. ${questionData.question}`;
+            questionEl.appendChild(questionText);
+            
+            const optionsList = document.createElement('div');
+            optionsList.className = 'options';
+            
+            questionData.options.forEach((option, idx) => {
+                const optionContainer = document.createElement('div');
+                optionContainer.className = 'option';
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'question-' + currentQuestionIndex;
+                radio.id = 'option-' + currentQuestionIndex + '-' + idx;
+                radio.value = idx;
+                
+                const label = document.createElement('label');
+                label.htmlFor = 'option-' + currentQuestionIndex + '-' + idx;
+                label.textContent = option;
+                
+                optionContainer.appendChild(radio);
+                optionContainer.appendChild(label);
+                optionsList.appendChild(optionContainer);
+            });
+            
+            questionEl.appendChild(optionsList);
+            quizContainer.appendChild(questionEl);
+            
+            // Add navigation buttons
+            const navButtons = document.createElement('div');
+            navButtons.className = 'nav-buttons';
+            
+            if (currentQuestionIndex > 0) {
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'Previous';
+                prevButton.addEventListener('click', () => {
+                    currentQuestionIndex--;
+                    showQuestion();
+                });
+                navButtons.appendChild(prevButton);
+            }
+            
+            const nextButton = document.createElement('button');
+            nextButton.textContent = currentQuestionIndex < currentQuiz.questions.length - 1 ? 'Next' : 'Submit';
+            nextButton.addEventListener('click', () => {
+                const selectedOption = document.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
+                if (!selectedOption && nextButton.textContent !== 'Submit') {
+                    alert('Please select an answer');
+                    return;
+                }
+                
+                if (selectedOption) {
+                    selectedAnswers[currentQuestionIndex] = parseInt(selectedOption.value);
+                }
+                
+                if (nextButton.textContent === 'Submit') {
+                    submitQuiz();
+                    return;
+                }
+                
+                currentQuestionIndex++;
+                showQuestion();
+            });
+            nextButton.className = currentQuestionIndex < currentQuiz.questions.length - 1 ? 'next-button' : 'submit-button';
+            navButtons.appendChild(nextButton);
+            
+            quizContainer.appendChild(navButtons);
+        }
+        
+        function selectAnswer(selectedIndex) {
+            selectedAnswers[currentQuestionIndex] = selectedIndex;
+        }
+        
+        function submitQuiz() {
+            let score = 0;
+            
+            // Calculate score based on selected answers
+            for (let i = 0; i < currentQuiz.questions.length; i++) {
+                if (currentQuiz.questions[i].answer === selectedAnswers[i]) {
+                    score++;
+                }
+            }
+            
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = `
+                <div class="quiz-result">
+                    <h2>Quiz Completed!</h2>
+                    <p>Your Score: ${score} out of ${currentQuiz.questions.length}</p>
+                    <div class="question-results">
+                        ${currentQuiz.questions.map((q, i) => {
+                            const isCorrect = q.answer === selectedAnswers[i];
+                            return `
+                                <div class="question-result ${isCorrect ? 'correct' : 'incorrect'}">
+                                    <p>${i + 1}. ${q.question}</p>
+                                    <p>Your answer: ${selectedAnswers[i] !== undefined ? q.options[selectedAnswers[i]] : 'Not answered'}</p>
+                                    <p>Correct answer: ${q.options[q.answer]}</p>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <a href="quiz.html" class="cta-button">Take Another Quiz</a>
+                    <a href="index.html" class="back-button">Back to Home</a>
+                </div>
+            `;
+            
+            // Optional: you can send score to backend here for leaderboard
+        }
+        
+        document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        // Fetch quiz when page loads
+        fetchQuiz();
+        </script>
+        </body>
+</html>

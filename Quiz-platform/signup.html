@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>SignUp - QuizzyPop </h1>
+        <a href="index.html" class="back-button">Back</a>
+    </header>
+    <main>
+        <form id="registerForm">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required>
+        
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required>
+        
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        
+            <button type="submit">Register</button>
+        </form>
+    </main>
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+        
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+        
+            // Generate username from email
+            const username = email.split('@')[0];
+            
+            // Create new user object
+            const newUser = {
+                username,
+                password,
+                email,
+                firstName,
+                lastName
+            };
+            
+            // Get existing users from user.json
+            const response = await fetch('user.json');
+            const users = await response.json();
+            
+            // Add new user
+            users.push(newUser);
+            
+            // Save updated users back to user.json
+            await fetch('user.json', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(users)
+            });
+            
+            alert('Registration Successful!');
+            window.location.href = 'login.html'; // After register, go to login
+        });
+        </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>User Profile</h1>
+    </header>
+    <main>
+        <div id="userInfo">
+            <!-- User information will be shown here -->
+        </div>
+    </main>
+    <script>
+        async function loadProfile() {
+            const user = JSON.parse(localStorage.getItem('user'));
+        
+            if (!user) {
+                alert('Please login first!');
+                window.location.href = 'login.html';
+                return;
+            }
+        
+            const userInfo = document.getElementById('userInfo');
+            userInfo.innerHTML = `
+                <h2>Welcome, ${user.username}</h2>
+                <p>Email: ${user.email}</p>
+                <h3>Your Quiz History (coming soon)</h3>
+            `;
+        
+            // Later we can fetch scores from backend here and display
+        }
+        
+        // Load profile when page opens
+        loadProfile();
+        </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+    </header>
+    <main>
+        <form id="addQuizForm">
+            <label for="question">Question</label>
+            <input type="text" id="question" name="question" required>
+            
+            <label>Options</label>
+            <div class="options-container">
+                <input type="text" id="optionA" name="optionA" placeholder="Option A" required>
+                <input type="text" id="optionB" name="optionB" placeholder="Option B" required>
+                <input type="text" id="optionC" name="optionC" placeholder="Option C" required>
+                <input type="text" id="optionD" name="optionD" placeholder="Option D" required>
+            </div>
+            
+            <label for="correctAnswer">Correct Answer</label>
+            <select id="correctAnswer" name="correctAnswer" required>
+                <option value="0">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+            </select>
+            
+            <button type="submit">Add Question</button>
+        </form>
+    </main>
+    <script>
+        const addQuizForm = document.getElementById('addQuizForm');
+        
+        addQuizForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+        
+            const question = document.getElementById('question').value;
+            const options = [
+                document.getElementById('optionA').value,
+                document.getElementById('optionB').value,
+                document.getElementById('optionC').value,
+                document.getElementById('optionD').value
+            ];
+            const answer = parseInt(document.getElementById('correctAnswer').value);
+            
+            const questions = [{
+                question: question.trim(),
+                options: options.map(opt => opt.trim()),
+                answer: answer
+            }];
+        
+            try {
+                // Show loading state
+                document.getElementById('loading').style.display = 'block';
+                
+                const response = await fetch('http://localhost:5000/api/admin/add-quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ questions })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Quiz Added Successfully!');
+                    addQuizForm.reset();
+                } else {
+                    throw new Error(data.error || 'Failed to Add Quiz');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            } finally {
+                // Hide loading state
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
+        </script>
+</body>
+</html>

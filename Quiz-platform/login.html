@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Login - QuizzyPop</h1>
+        <a href="index.html" class="back-button">Back</a>
+    </header>
+    <main>
+        <form id="loginForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </main>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+        
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+        
+            const response = await fetch('http://localhost:5000/api/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+        
+            const data = await response.json();
+            if (response.ok) {
+                alert('Login Successful!');
+                localStorage.setItem('user', JSON.stringify(data));
+                
+                // Save user to user.json
+                const usersResponse = await fetch('user.json');
+                const users = await usersResponse.json();
+                if (!users.some(u => u.email === data.email)) {
+                    users.push(data);
+                    await fetch('user.json', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(users)
+                    });
+                }
+                
+                window.location.href = 'quiz.html'; // After login, go to Quiz
+            } else {
+                alert(data.error || 'Login Failed');
+            }
+        });
+        </script>
+</body>
+</html>
