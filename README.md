@@ -41,8 +41,9 @@ QUIZZYPOP is an interactive online quiz platform that enhances learning through 
 
 ## 📸 Screenshots
 
-![Screenshot 1](https://drive.google.com/file/d/1gGlhTqRINSO_u_tWF5bbsL3vwzV2RxeJ/view?usp=share_link)
-![Screenshot 2](https://drive.google.com/file/d/1TehrLU-W0rxK742xjiM2zHVuEdXsXX6Y/view?usp=share_link)
+Screenshot 1-https://drive.google.com/file/d/1gGlhTqRINSO_u_tWF5bbsL3vwzV2RxeJ/view?usp=share_link
+Screenshot 2- 
+https://drive.google.com/file/d/1TehrLU-W0rxK742xjiM2zHVuEdXsXX6Y/view?usp=share_link)
 
 ---
 
