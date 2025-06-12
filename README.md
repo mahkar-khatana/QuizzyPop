@@ -5,7 +5,7 @@ QUIZZYPOP is an interactive online quiz platform that enhances learning through 
 ---
 ## 👥 Team Members
 
-- Mahkar Khatana (2401010188)
+- Mahkar Khatana (2401010188) - Team Leader
 - Kanav Malik (2401010231)
 - Mayank Bajetha (2401010206)
 - Sriyansh Yadav (2401010238)
